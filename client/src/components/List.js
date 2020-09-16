@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import { GET_BOOKS } from '../Queries';
 
-// This component uses the deprecated React Apollo HOC API, graphql()
+// The component uses the deprecated React Apollo HOC API, graphql()
 const ListBooks = props => {
   return (
     <>

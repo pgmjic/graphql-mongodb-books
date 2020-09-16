@@ -5,6 +5,7 @@ import { GET_BOOK, UPDATE_BOOK } from '../Queries';
 import FormPage from './FormPage';
 import { bookStates, toggleOpen, validateForm, evtHandler } from './Utils';
 
+//
 class Edit extends Component {
 
   constructor() {

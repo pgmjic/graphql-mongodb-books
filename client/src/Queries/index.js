@@ -1,5 +1,6 @@
 import { gql } from 'apollo-boost';
 
+// List of valid queries/mutTIONS
 export const GET_CATEGORY = gql`
 {
   __type(name:"Category") {
