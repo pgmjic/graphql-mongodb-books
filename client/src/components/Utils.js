@@ -1,20 +1,39 @@
-// Utils.js 
+// Utils.js
 
 const bookStates = {
   isbn: "",
+  isbn_checked: false,
   title: "",
   author: "",
+  author_checked: true,
   description: "",
   publisher: "",
   published_year: 0,
   image_src: "",
   category: "",
+  category_checked: false,
   formValid: false,
   isOpen: false,
 }
 
+const ValidFields = ['isbn', 'author', 'category'];
+
 function toggleOpen() {
   this.setState({ isOpen: !this.state.isOpen });
+}
+
+function handleClose() {
+  this.setState({ isOpen: false });
+}  
+
+function handleCheckBox(e) {
+  let field_checked;
+  if (ValidFields.includes(e.target.name)) {
+    field_checked = e.target.name + '_checked';
+    this.setState({
+      [field_checked]: e.target.checked,
+    });
+  }
 }
 
 function validateForm() {
@@ -40,4 +59,4 @@ function evtHandler(evt) {
   }
 }
 
-export { bookStates, toggleOpen, validateForm, evtHandler }
+export { bookStates, toggleOpen, handleClose, handleCheckBox, validateForm, evtHandler }

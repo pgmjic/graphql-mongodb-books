@@ -1,6 +1,5 @@
 import { gql } from 'apollo-boost';
 
-// List of valid queries/mutTIONS
 export const GET_CATEGORY = gql`
 {
   __type(name:"Category") {
@@ -12,12 +11,24 @@ export const GET_CATEGORY = gql`
 }
 `;
 
+export const GET_BOOKS_NAME = gql`
+{
+  __type(name:"book") {
+    fields{
+      name
+    }
+  }
+}
+`;
+
 export const GET_BOOKS = gql`
 {
   books {
     _id
+    isbn
     title
     author
+    category
   }
 }
 `;
@@ -95,4 +106,3 @@ export const ADD_BOOK = gql`
         }
     }
 `;
-
