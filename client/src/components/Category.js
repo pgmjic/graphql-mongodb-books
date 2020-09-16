@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Query } from "react-apollo";
 import { GET_CATEGORY, GET_BOOK } from '../Queries';
 
+//
 class Category extends Component {
 
   render() {
