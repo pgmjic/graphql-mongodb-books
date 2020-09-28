@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import ListBooks from './components/List';
 import FieldList from './components/FieldList';
-import { bookStates, toggleOpen, handleClose, handleCheckBox } from './components/Utils';
+import { bookStates, toggleOpen, handleClose } from './components/Utils';
 
 class App extends Component {
   constructor() {
@@ -10,12 +12,11 @@ class App extends Component {
 
     this.toggleOpen = toggleOpen.bind(this);
     this.handleClose = handleClose.bind(this);
-    this.handleCheckBox = handleCheckBox.bind(this);
     this.state = bookStates;
   }
 
   render() {
-    let checkBoxItems = ['A', 'b'];
+    let { isbnChecked, authorChecked, categoryChecked} = this.props;
 
     return (
       <div className="container">
@@ -31,7 +32,6 @@ class App extends Component {
               <FieldList
                 toggleOpen={this.toggleOpen}
                 handleClose={this.handleClose}
-                handleCheckBox={this.handleCheckBox}
                 state={this.state}
               />
             </div>
@@ -41,19 +41,23 @@ class App extends Component {
               <thead>
                 <tr>
                   <th>Title</th>
-                  {this.state.author_checked &&
+                  {authorChecked &&
                     <th>Author</th>
                   }
-                  {this.state.category_checked &&
+                  {categoryChecked &&
                     <th>Category</th>
                   }
-                  {this.state.isbn_checked &&
+                  {isbnChecked &&
                     <th>ISBN</th>
                   }
                 </tr>
               </thead>
               <tbody>
-                <ListBooks state={this.state} />
+                <ListBooks categoryStates={{
+                  'isbn': isbnChecked,
+                  'author': authorChecked,
+                  'category': categoryChecked}
+                 } />
               </tbody>
             </table>
           </div>
@@ -63,4 +67,14 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  let { isbnChecked, authorChecked, categoryChecked} = state.categoryCheck;
+
+  return {
+    isbnChecked, 
+    authorChecked, 
+    categoryChecked
+  }
+}
+
+export default connect(mapStateToProps)(App)

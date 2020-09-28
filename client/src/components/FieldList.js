@@ -1,11 +1,47 @@
 import React, { Component } from 'react';
 import { Query } from "react-apollo";
+import { connect } from 'react-redux';
+
 import { GET_BOOKS_NAME } from '../Queries';
 import { Button, Modal } from 'react-bootstrap'
-import { bookStates } from '../components/Utils';
 
+import { ValidFields } from '../components/Utils';
+import { checkedIsbn, checkedAuthor, checkedCategory } from '../actions';
 
 class FieldList extends Component {
+  constructor() {
+    super();
+
+    this.checkedState = this.checkedState.bind(this);
+    this.handleCheckBox = this.handleCheckBox.bind(this);
+  }
+
+  checkedState(item) {
+    let { isbnChecked, authorChecked, categoryChecked} = this.props;
+
+    switch (item) {
+      case 'isbn': return isbnChecked;
+      case 'author': return authorChecked;
+      case 'category': return categoryChecked;
+      default: return false;
+    }
+  }
+
+  handleCheckBox(e, item) {
+    const { dispatch } = this.props;
+    switch (item) {
+      case 'isbn': 
+        dispatch(checkedIsbn(e.target.checked));
+        break;
+      case 'author': 
+        dispatch(checkedAuthor(e.target.checked));
+        break;
+      case 'category': 
+        dispatch(checkedCategory(e.target.checked));
+        break;
+      default: return false;
+    }
+  }
 
   render() {
 
@@ -16,12 +52,11 @@ class FieldList extends Component {
         {({ loading, error, data: book }) => {
           if (loading) return 'Loading...';
           if (error) return `Error! ${error.message}`;
-          let fields = Object.keys(bookStates);
           let test = book?.__type.fields;
           let checkBoxItems=[];
 
           test.filter(item => {
-            if (fields.includes(item.name))
+            if (ValidFields.includes(item.name))
               checkBoxItems.push(item.name)
           });
 
@@ -30,11 +65,11 @@ class FieldList extends Component {
               <div className="col">
                 <div className="form-group">
                   <Button className='mt-2' variant="primary" onClick={this.props.toggleOpen}>
-                    Modify Field List
+                    Field List
                   </Button>
                   <Modal show={this.props.state.isOpen} onHide={this.props.handleClose}>
                     <Modal.Header closeButton>
-                      <Modal.Title>Modal heading</Modal.Title>
+                      <Modal.Title>Select Fields to Show:</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                       <form>
@@ -44,8 +79,9 @@ class FieldList extends Component {
                               <input
                                 type="checkbox"
                                 name={item}
-                                onChange={this.props.handleCheckBox}
                                 className="form-check-input"
+                                onChange={ (event) => this.handleCheckBox(event, item) }
+                                checked={ this.checkedState(item) }
                               />
                               {item}
                             </label>
@@ -68,4 +104,14 @@ class FieldList extends Component {
   )};
 }
 
-export default FieldList;
+const mapStateToProps = (state) => {
+  let { isbnChecked, authorChecked, categoryChecked} = state.categoryCheck;
+
+  return {
+    isbnChecked, 
+    authorChecked, 
+    categoryChecked
+  }
+}
+
+export default connect(mapStateToProps)(FieldList)

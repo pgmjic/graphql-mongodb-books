@@ -10,13 +10,13 @@ const ListBooks = props => {
       {props.data?.books?.map((book, index) => (
         <tr key={index}>
           <td><Link to={`/show/${book._id}`}>{book.title}</Link></td>
-          { props.state.author_checked &&
+          { props.categoryStates.author &&
             <td>{book.author}</td>
           }
-          { props.state.category_checked &&
+          { props.categoryStates.category &&
             <td>{book.category}</td>
           }
-          { props.state.isbn_checked &&
+          { props.categoryStates.isbn &&
             <td>{book.isbn}</td>
           }
         </tr>

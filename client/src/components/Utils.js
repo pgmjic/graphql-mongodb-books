@@ -2,16 +2,13 @@
 
 const bookStates = {
   isbn: "",
-  isbn_checked: false,
   title: "",
   author: "",
-  author_checked: true,
   description: "",
   publisher: "",
   published_year: 0,
   image_src: "",
   category: "",
-  category_checked: false,
   formValid: false,
   isOpen: false,
 }
@@ -25,16 +22,6 @@ function toggleOpen() {
 function handleClose() {
   this.setState({ isOpen: false });
 }  
-
-function handleCheckBox(e) {
-  let field_checked;
-  if (ValidFields.includes(e.target.name)) {
-    field_checked = e.target.name + '_checked';
-    this.setState({
-      [field_checked]: e.target.checked,
-    });
-  }
-}
 
 function validateForm() {
   const { title, published_year } = this.state;
@@ -59,4 +46,4 @@ function evtHandler(evt) {
   }
 }
 
-export { bookStates, toggleOpen, handleClose, handleCheckBox, validateForm, evtHandler }
+export { bookStates, ValidFields, toggleOpen, handleClose, validateForm, evtHandler }
