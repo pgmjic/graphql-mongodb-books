@@ -8,12 +8,18 @@ export const UPDATE_IMAGE_SRC = 'UPDATE_IMAGE_SRC'
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
 
 export const CHECKED_ISBN = 'CHECKED_ISBN'
+export const CHECKED_TITLE = 'CHECKED_TITLE'
 export const CHECKED_AUTHOR = 'CHECKED_AUTHOR'
 export const CHECKED_CATEGORY = 'CHECKED_CATEGORY'
 
 export const checkedIsbn = isbnChecked => ({
 	type: CHECKED_ISBN,
 	isbnChecked
+})
+
+export const checkedTitle = titleChecked => ({
+	type: CHECKED_TITLE,
+	titleChecked
 })
 
 export const checkedAuthor = authorChecked => ({

@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux'
 import {
 	CHECKED_ISBN,
+	CHECKED_TITLE,
 	CHECKED_AUTHOR,
 	CHECKED_CATEGORY
 } from '../actions'
 
 const initialState = {
   isbnChecked: false,
+  titleChecked: false,
   authorChecked: true,
   categoryChecked: false
 }
@@ -18,10 +20,15 @@ const categoryCheck = (state = initialState, action) => {
 				...state,
 				isbnChecked: action.isbnChecked
 			}
-    case CHECKED_AUTHOR:
-      return {
+		case CHECKED_TITLE:
+			return {
 				...state,
-				isbnChecked: action.authorChecked
+				titleChecked: action.titleChecked
+			}
+		case CHECKED_AUTHOR:
+			return {
+				...state,
+				authorChecked: action.authorChecked
 			}
     case CHECKED_CATEGORY:
       return {
